@@ -4,6 +4,8 @@ use std::{
 };
 
 use day1;
+use day2;
+use day3;
 
 const REPEATS: u32 = 100;
 
@@ -25,8 +27,8 @@ macro_rules! solutions {
 #[rustfmt::skip]
 const SOLUTIONS: [Solution; 25] = solutions!(
     Some(day1::part1), Some(day1::part2),
-    None, None,
-    None, None,
+    Some(day2::part1), Some(day2::part2),
+    Some(day3::part1), Some(day3::part2),
     None, None,
     None, None,
     None, None,
