@@ -1,6 +1,5 @@
 use std::collections::HashSet;
 
-#[derive(Debug)]
 struct Schematic {
     inner: Vec<char>,
     width: usize,
@@ -27,6 +26,8 @@ impl Schematic {
     }
 
     fn at(&self, x: usize, y: usize) -> char {
+        assert!(x < self.width);
+        assert!(y < self.height);
         let index = y * self.width + x;
         self.inner[index]
     }
@@ -84,9 +85,9 @@ fn check_surrounding(
     y: usize,
 ) -> Vec<u32> {
     let x_min = x.saturating_sub(1);
-    let x_max = schematic.width.min(x + 1);
+    let x_max = (schematic.width - 1).min(x + 1);
     let y_min = y.saturating_sub(1);
-    let y_max = schematic.height.min(y + 1);
+    let y_max = (schematic.height - 1).min(y + 1);
 
     let mut labels = Vec::new();
 
