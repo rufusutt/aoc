@@ -105,6 +105,7 @@ pub fn part1(input: &str) -> u32 {
     // Parse input
     let schematic = Schematic::new(input);
 
+    // Keep track of visited positions
     let mut checked = HashSet::new();
 
     // Solution output
@@ -134,9 +135,9 @@ pub fn part2(input: &str) -> u32 {
     // Find all gears
     for y in 0..schematic.height {
         for x in 0..schematic.width {
-            // If character is symbol
-            let mut checked = HashSet::new();
+            // If character is gear
             if schematic.at(x, y) == '*' {
+                let mut checked = HashSet::new();
                 let labels = check_surrounding(&schematic, &mut checked, x, y);
                 if labels.len() == 2 {
                     gear_ratio_sum += labels.into_iter().product::<u32>();
