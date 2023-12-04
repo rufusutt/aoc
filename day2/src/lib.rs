@@ -39,7 +39,7 @@ fn parse_game(input: &str) -> Game {
         .unwrap();
 
     // Parse rounds separated by ';'
-    let rounds: Vec<_> = rounds.split(';').map(|round| parse_round(round)).collect();
+    let rounds: Vec<_> = rounds.split(';').map(parse_round).collect();
 
     Game { id, rounds }
 }
@@ -49,23 +49,18 @@ fn game_possible(game: &Game) -> bool {
     const MAX_GREEN: u32 = 13;
     const MAX_BLUE: u32 = 14;
 
-    if game
+    !game
         .rounds
         .iter()
         .any(|r| r.red > MAX_RED || r.green > MAX_GREEN || r.blue > MAX_BLUE)
-    {
-        false
-    } else {
-        true
-    }
 }
 
 pub fn part1(input: &str) -> u32 {
     input
         .lines()
         .filter(|line| !line.is_empty())
-        .map(|line| parse_game(line))
-        .filter(|game| game_possible(game))
+        .map(parse_game)
+        .filter(game_possible)
         .map(|game| game.id)
         .sum::<u32>()
 }
@@ -74,7 +69,7 @@ pub fn part2(input: &str) -> u32 {
     input
         .lines()
         .filter(|line| !line.is_empty())
-        .map(|line| parse_game(line))
+        .map(parse_game)
         .map(|game| {
             let rounds = || game.rounds.iter();
 

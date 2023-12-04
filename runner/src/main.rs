@@ -3,10 +3,6 @@ use std::{
     time::{Duration, Instant},
 };
 
-use day1;
-use day2;
-use day3;
-
 const REPEATS: u32 = 100;
 
 struct Solution {
@@ -29,7 +25,7 @@ const SOLUTIONS: [Solution; 25] = solutions!(
     Some(day1::part1), Some(day1::part2),
     Some(day2::part1), Some(day2::part2),
     Some(day3::part1), Some(day3::part2),
-    None, None,
+    Some(day4::part1), Some(day4::part2),
     None, None,
     None, None,
     None, None,
@@ -63,7 +59,7 @@ fn run_part(input: &str, func: Option<fn(input: &str) -> u32>) {
 
         // Run solution REPEAT times
         let solution = (0..REPEATS)
-            .map(|_| func(&input))
+            .map(|_| func(input))
             .last()
             .expect("REPEATS must be greater than 0");
 
@@ -112,7 +108,7 @@ fn main() -> Result<ExitCode, std::io::Error> {
         eprintln!("Invalid day: {}", day);
         return Ok(ExitCode::FAILURE);
     };
-    if day < 1 || day > 25 {
+    if !(1..=25).contains(&day) {
         eprintln!("ಠ_ಠ: {}", day);
         return Ok(ExitCode::FAILURE);
     }

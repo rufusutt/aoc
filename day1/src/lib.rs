@@ -4,7 +4,7 @@ const DIGITS: [&str; 10] = [
 
 fn parse_ascii_digit(digit: char) -> u32 {
     assert!(digit.is_ascii_digit());
-    (digit as u8 - '0' as u8) as u32
+    (digit as u8 - b'0') as u32
 }
 
 fn parse_digit(string: &str) -> Option<u32> {
