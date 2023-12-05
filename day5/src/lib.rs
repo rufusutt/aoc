@@ -1,3 +1,5 @@
+use rayon::iter::{IntoParallelIterator, ParallelIterator};
+
 #[derive(Debug, PartialEq, Eq)]
 struct MapRange {
     destination: u32,
@@ -21,7 +23,6 @@ struct InputRange {
 
 fn parse_seeds(input: &str) -> Vec<u32> {
     input
-        .trim()
         .split_whitespace()
         .skip(1)
         .map(|seed| seed.parse::<u32>())
@@ -31,7 +32,6 @@ fn parse_seeds(input: &str) -> Vec<u32> {
 
 fn parse_seed_ranges(input: &str) -> Vec<InputRange> {
     let parts = input
-        .trim()
         .split_whitespace()
         .skip(1)
         .map(|seed| seed.parse::<u32>())
@@ -87,8 +87,7 @@ fn split_input_range(mut input_range: InputRange, map: &Map) -> Vec<InputRange> 
     // All the points where the input range needs to be split
     let split_points: Vec<u32> = map
         .iter()
-        .map(|range| [range.source, range.source + range.len])
-        .flatten()
+        .flat_map(|range| [range.source, range.source + range.len])
         .collect();
 
     let mut output_ranges = Vec::new();
@@ -158,14 +157,20 @@ pub fn part2(input: &str) -> u32 {
     let maps = parse_maps(maps);
 
     for map in maps {
-        let mut output_ranges = Vec::new();
-        for input_range in input_ranges.into_iter() {
-            output_ranges.extend(map_input_range(input_range, &map));
-        }
+        let output_ranges: Vec<_> = input_ranges
+            .into_par_iter()
+            .map(|input_range| map_input_range(input_range, &map))
+            .flatten()
+            .collect();
+
         input_ranges = output_ranges;
     }
 
-    input_ranges.into_iter().map(|range| range.start).min().unwrap()
+    input_ranges
+        .into_iter()
+        .map(|range| range.start)
+        .min()
+        .unwrap()
 }
 
 #[cfg(test)]

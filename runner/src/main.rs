@@ -3,7 +3,7 @@ use std::{
     time::{Duration, Instant},
 };
 
-const REPEATS: u32 = 100;
+const REPEATS: u32 = 5;
 
 struct Solution {
     part1: Option<fn(input: &str) -> u32>,
