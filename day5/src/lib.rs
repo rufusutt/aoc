@@ -159,8 +159,7 @@ pub fn part2(input: &str) -> u32 {
     for map in maps {
         let output_ranges: Vec<_> = input_ranges
             .into_par_iter()
-            .map(|input_range| map_input_range(input_range, &map))
-            .flatten()
+            .flat_map(|input_range| map_input_range(input_range, &map))
             .collect();
 
         input_ranges = output_ranges;
