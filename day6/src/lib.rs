@@ -32,7 +32,7 @@ fn parse_single_race(input: &str) -> Race {
 fn satisfies_constraints(race: &Race, charge_time: u64) -> bool {
     // Solved using inequalites
     // charge_time <= race_time
-    // charge_tim + distance / charge_time <= race_time
+    // charge_time + distance / charge_time <= race_time
     (charge_time * race.time) > (race.distance + charge_time.pow(2))
 }
 
