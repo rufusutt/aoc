@@ -46,19 +46,19 @@ impl Hand {
             counts[0] = 0;
         }
 
-        let max_count = *counts.iter().max().unwrap();
+        counts.sort_unstable();
 
-        match max_count {
+        match counts[13] {
             1 => HandType::HighCard,
             2 => {
-                if counts.iter().filter(|&&count| count == 2).count() == 2 {
+                if counts[12] == 2 {
                     HandType::TwoPair
                 } else {
                     HandType::OnePair
                 }
             }
             3 => {
-                if counts.iter().any(|&count| count == 2) {
+                if counts[12] == 2 {
                     HandType::FullHouse
                 } else {
                     HandType::ThreeOfAKind
