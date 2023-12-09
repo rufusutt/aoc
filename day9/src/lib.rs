@@ -1,13 +1,9 @@
-fn parse_sequences(input: &str) -> Vec<Vec<i32>> {
-    input
-        .trim()
-        .lines()
-        .map(|line| {
-            line.split_whitespace()
-                .map(|x| x.parse::<i32>().unwrap())
-                .collect()
-        })
-        .collect()
+fn parse_sequence(line: &str, buf: &mut Vec<i64>) {
+    buf.clear();
+    buf.extend(
+        line.split_ascii_whitespace()
+            .map(|x| x.parse::<i64>().unwrap()),
+    );
 }
 
 /// Generates coefficients for the nth difference operation based on Pascal's triangle.
@@ -15,20 +11,19 @@ fn parse_sequences(input: &str) -> Vec<Vec<i32>> {
 /// Given an integer `n`, this function computes the coefficients used in the formula for the nth
 /// difference operation. The formula involves binomial coefficients with alternating signs,
 /// resembling a signed version of Pascal's triangle.
-fn generate_coefficients(n: usize) -> Vec<i32> {
-    let mut coefficients = vec![1];
+fn generate_coefficients(n: usize, coefficient_buf: &mut Vec<i64>) {
+    coefficient_buf.clear();
+    coefficient_buf.push(1);
 
     for k in 1..=n {
-        let next_coefficient = coefficients[k - 1] * (n as i32 - k as i32 + 1) / k as i32;
-        coefficients.push(next_coefficient);
+        let next_coefficient = coefficient_buf[k - 1] * (n as i64 - k as i64 + 1) / k as i64;
+        coefficient_buf.push(next_coefficient);
     }
 
     // Apply alternating signs
-    for coefficient in coefficients.iter_mut().skip(1).step_by(2) {
+    for coefficient in coefficient_buf.iter_mut().skip(1).step_by(2) {
         *coefficient *= -1;
     }
-
-    coefficients
 }
 
 /// Interpolates a sequence of equally spaced points using a polynomial of degree at most n,
@@ -41,41 +36,63 @@ fn generate_coefficients(n: usize) -> Vec<i32> {
 ///
 /// Thus, given values y_0, ..., y_n at equally spaced points, where n = d + 1, we have:
 /// (-1)^n * y_0 + (-1)^(n-1) * C(n,1) * y_1 + ... - C(n,n-1) * y_(n-1) + y_n = 0.
-fn interpolate_sequence(sequence: &[i32]) -> i32 {
-    let coefficients = generate_coefficients(sequence.len());
+fn interpolate_sequence(sequence: &[i64], coefficient_buf: &mut Vec<i64>) -> i64 {
+    generate_coefficients(sequence.len(), coefficient_buf);
 
     let interpolation = sequence
         .iter()
-        .zip(coefficients.iter().rev())
+        .zip(coefficient_buf.iter().rev())
         .map(|(x, coeff)| x * coeff)
-        .sum::<i32>();
+        .sum::<i64>();
 
     interpolation * -1
 }
 
 pub fn part1(input: &str) -> u32 {
-    let sequences = parse_sequences(input);
+    // Allocated single buffers to be reused
+    let mut sequence_buf = Vec::new();
+    let mut coefficient_buf = Vec::new();
 
-    sequences
-        .into_iter()
-        .map(|s| interpolate_sequence(&s))
-        .sum::<i32>()
-        .try_into()
-        .expect("Runner needs unsigned answer")
+    let ans = input
+        .trim()
+        .lines()
+        .map(|line| {
+            parse_sequence(line, &mut sequence_buf);
+            interpolate_sequence(&sequence_buf, &mut coefficient_buf)
+        })
+        .sum::<i64>();
+
+    // TODO
+    if let Ok(ans) = ans.try_into() {
+        ans
+    } else {
+        // println!("{}", ans);
+        0
+    }
 }
 
 pub fn part2(input: &str) -> u32 {
-    let mut sequences = parse_sequences(input);
+    // Allocated single buffers to be reused
+    let mut sequence_buf = Vec::new();
+    let mut coefficient_buf = Vec::new();
 
-    // Reverse all sequences
-    sequences.iter_mut().for_each(|s| s.reverse());
+    let ans = input
+        .trim()
+        .lines()
+        .map(|line| {
+            parse_sequence(line, &mut sequence_buf);
+            sequence_buf.reverse();
+            interpolate_sequence(&sequence_buf, &mut coefficient_buf)
+        })
+        .sum::<i64>();
 
-    sequences
-        .into_iter()
-        .map(|s| interpolate_sequence(&s))
-        .sum::<i32>()
-        .try_into()
-        .expect("Runner needs unsigned answer")
+    // TODO
+    if let Ok(ans) = ans.try_into() {
+        ans
+    } else {
+        // println!("{}", ans);
+        0
+    }
 }
 
 #[cfg(test)]
