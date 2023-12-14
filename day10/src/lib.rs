@@ -21,12 +21,7 @@ impl Map {
     const WEST_TILES: [char; 4] = ['S', '-', 'J', '7'];
 
     fn new(input: &str) -> Map {
-        let tiles: Vec<_> = input
-            .trim()
-            .lines()
-            .map(|line| line.chars())
-            .flatten()
-            .collect();
+        let tiles: Vec<_> = input.trim().lines().flat_map(|line| line.chars()).collect();
 
         // Get map width
         let width = input.trim().lines().next().unwrap().chars().count();
@@ -128,7 +123,7 @@ impl Map {
             self.west(pos),
         ]
         .into_iter()
-        .filter_map(|pos| pos)
+        .flatten()
     }
 }
 

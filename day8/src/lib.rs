@@ -22,7 +22,7 @@ fn gcd(mut a: usize, mut b: usize) -> usize {
         b = a % b;
         a = t;
     }
-    return a;
+    a
 }
 
 fn lcm(numbers: &[usize]) -> usize {

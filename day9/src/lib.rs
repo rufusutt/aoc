@@ -45,7 +45,7 @@ fn interpolate_sequence(sequence: &[i64], coefficient_buf: &mut Vec<i64>) -> i64
         .map(|(x, coeff)| x * coeff)
         .sum::<i64>();
 
-    interpolation * -1
+    -interpolation
 }
 
 pub fn part1(input: &str) -> u32 {

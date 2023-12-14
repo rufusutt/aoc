@@ -7,7 +7,7 @@ struct Image {
 
 impl Image {
     fn new(input: &str) -> Self {
-        let data = || input.trim().lines().map(|line| line.chars()).flatten();
+        let data = || input.trim().lines().flat_map(|line| line.chars());
 
         let width = input.trim().lines().next().unwrap().len();
         let height = data().count() / width;
@@ -45,7 +45,7 @@ impl Image {
     }
 
     fn insert_rows(&mut self, index: usize, count: usize) {
-        for (x, y) in self.galaxies.iter_mut() {
+        for (_, y) in self.galaxies.iter_mut() {
             if *y >= index {
                 *y += count;
             }
@@ -54,7 +54,7 @@ impl Image {
     }
 
     fn insert_columns(&mut self, index: usize, count: usize) {
-        for (x, y) in self.galaxies.iter_mut() {
+        for (x, _) in self.galaxies.iter_mut() {
             if *x >= index {
                 *x += count;
             }
@@ -85,7 +85,7 @@ fn distance(a: (usize, usize), b: (usize, usize)) -> usize {
     let (x1, y1) = a;
     let (x2, y2) = b;
 
-    (x2 as isize - x1 as isize).abs() as usize + (y2 as isize - y1 as isize).abs() as usize
+    (x2 as isize - x1 as isize).unsigned_abs() + (y2 as isize - y1 as isize).unsigned_abs()
 }
 
 fn sum_of_distances(input: &str, expansion: usize) -> u32 {
@@ -134,21 +134,6 @@ mod tests {
 ..........
 .......#..
 #...#.....
-"#;
-
-    const EXPANDED_INPUT: &str = r#"
-....#........
-.........#...
-#............
-.............
-.............
-........#....
-.#...........
-............#
-.............
-.............
-.........#...
-#....#.......    
 "#;
 
     #[test]
