@@ -280,7 +280,7 @@ LJ...
 ..........
 "#;
 
-const TEST_INPUT_5: &str = r#"
+    const TEST_INPUT_5: &str = r#"
 .F----7F7F7F7F-7....
 .|F--7||||||||FJ....
 .||.FJ||||||||L7....
@@ -293,7 +293,7 @@ L--J.L7...LJS7F-7L7.
 ....L---J.LJ.LJLJ...
 "#;
 
-const TEST_INPUT_6: &str = r#"
+    const TEST_INPUT_6: &str = r#"
 FF7FSF7F7F7F7F7F---7
 L|LJ||||||||||||F--J
 FL-7LJLJ||||||LJL-77
@@ -305,7 +305,6 @@ L---JF-JLJ.||-FJLJJ7
 L.L7LFJ|||||FJL7||LJ
 L7JLJL-JLJLJL--JLJ.L
 "#;
-
 
     #[test]
     fn test_part1() {
