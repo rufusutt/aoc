@@ -11,6 +11,7 @@ dependencies = [
  "day11",
  "day13",
  "day14",
+ "day15",
  "day2",
  "day3",
  "day4",
@@ -20,6 +21,12 @@ dependencies = [
  "day8",
  "day9",
 ]
+
+[[package]]
+name = "array-init"
+version = "2.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "3d62b7694a562cdf5a74227903507c56ab2cc8bdd1f781ed5cb4cf9c9f810bfc"
 
 [[package]]
 name = "autocfg"
@@ -84,6 +91,13 @@ version = "0.1.0"
 [[package]]
 name = "day14"
 version = "0.1.0"
+
+[[package]]
+name = "day15"
+version = "0.1.0"
+dependencies = [
+ "array-init",
+]
 
 [[package]]
 name = "day2"

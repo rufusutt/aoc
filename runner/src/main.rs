@@ -36,7 +36,7 @@ const SOLUTIONS: [Solution; 25] = solutions!(
     None, None,
     Some(day13::part1), Some(day13::part2),
     Some(day14::part1), Some(day14::part2),
-    None, None,
+    Some(day15::part1), Some(day15::part2),
     None, None,
     None, None,
     None, None,
