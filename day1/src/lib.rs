@@ -43,7 +43,7 @@ fn find_last_digit(string: &str) -> u32 {
     panic!()
 }
 
-pub fn part1(input: &str) -> u32 {
+pub fn part1(input: &str) -> String {
     input
         .lines()
         .filter(|line| !line.is_empty())
@@ -60,9 +60,10 @@ pub fn part1(input: &str) -> u32 {
             first * 10 + last
         })
         .sum::<u32>()
+        .to_string()
 }
 
-pub fn part2(input: &str) -> u32 {
+pub fn part2(input: &str) -> String {
     input
         .lines()
         .filter(|line| !line.is_empty())
@@ -73,6 +74,7 @@ pub fn part2(input: &str) -> u32 {
             first * 10 + last
         })
         .sum::<u32>()
+        .to_string()
 }
 
 #[cfg(test)]
@@ -88,7 +90,7 @@ a1b2c3d4e5f
 treb7uchet
 "#;
 
-        assert_eq!(part1(input), 142);
+        assert_eq!(&part1(input), "142");
     }
 
     #[test]
@@ -103,6 +105,6 @@ zoneight234
 7pqrstsixteen
 "#;
 
-        assert_eq!(part2(input), 281);
+        assert_eq!(&part2(input), "281");
     }
 }

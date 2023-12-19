@@ -4,11 +4,11 @@ fn shoelace_formula(vertices: &[[isize; 2]]) -> usize {
     let mut sum = 0;
 
     for i in 0..n {
-        let x1 = vertices[i][0] as isize;
-        let y1 = vertices[i][1] as isize;
+        let x1 = vertices[i][0];
+        let y1 = vertices[i][1];
 
-        let x2 = vertices[(i + 1) % n][0] as isize;
-        let y2 = vertices[(i + 1) % n][1] as isize;
+        let x2 = vertices[(i + 1) % n][0];
+        let y2 = vertices[(i + 1) % n][1];
 
         sum += x1 * y2 - x2 * y1;
     }
@@ -16,7 +16,7 @@ fn shoelace_formula(vertices: &[[isize; 2]]) -> usize {
     (sum.abs() / 2) as usize
 }
 
-pub fn part1(input: &str) -> u32 {
+pub fn part1(input: &str) -> String {
     let mut vertices: Vec<[isize; 2]> = Vec::new();
 
     let mut pos = [0, 0];
@@ -41,10 +41,10 @@ pub fn part1(input: &str) -> u32 {
     let area = shoelace_formula(&vertices);
 
     // Use Pick's Theorem to find total squares from boundary and area
-    (area + (move_count / 2) + 1) as u32
+    (area + (move_count / 2) + 1).to_string()
 }
 
-pub fn part2(input: &str) -> u32 {
+pub fn part2(input: &str) -> String {
     let mut vertices: Vec<[isize; 2]> = Vec::new();
 
     let mut pos = [0, 0];
@@ -70,10 +70,7 @@ pub fn part2(input: &str) -> u32 {
     let area = shoelace_formula(&vertices);
 
     // Use Pick's Theorem to find total squares from boundary and area
-    let volume = area + (move_count / 2) + 1;
-    dbg!(volume);
-
-    volume as u32
+    (area + (move_count / 2) + 1).to_string()
 }
 
 #[cfg(test)]
@@ -99,11 +96,11 @@ U 2 (#7a21e3)
 
     #[test]
     fn test_part1() {
-        assert_eq!(part1(TEST_INPUT), 62);
+        assert_eq!(&part1(TEST_INPUT), "62");
     }
 
     #[test]
     fn test_part2() {
-        assert_eq!(part2(TEST_INPUT), 0);
+        assert_eq!(&part2(TEST_INPUT), "952408144115");
     }
 }

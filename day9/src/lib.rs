@@ -48,35 +48,28 @@ fn interpolate_sequence(sequence: &[i64], coefficient_buf: &mut Vec<i64>) -> i64
     -interpolation
 }
 
-pub fn part1(input: &str) -> u32 {
+pub fn part1(input: &str) -> String {
     // Allocated single buffers to be reused
     let mut sequence_buf = Vec::new();
     let mut coefficient_buf = Vec::new();
 
-    let ans = input
+    input
         .trim()
         .lines()
         .map(|line| {
             parse_sequence(line, &mut sequence_buf);
             interpolate_sequence(&sequence_buf, &mut coefficient_buf)
         })
-        .sum::<i64>();
-
-    // TODO
-    if let Ok(ans) = ans.try_into() {
-        ans
-    } else {
-        // println!("{}", ans);
-        0
-    }
+        .sum::<i64>()
+        .to_string()
 }
 
-pub fn part2(input: &str) -> u32 {
+pub fn part2(input: &str) -> String {
     // Allocated single buffers to be reused
     let mut sequence_buf = Vec::new();
     let mut coefficient_buf = Vec::new();
 
-    let ans = input
+    input
         .trim()
         .lines()
         .map(|line| {
@@ -84,15 +77,8 @@ pub fn part2(input: &str) -> u32 {
             sequence_buf.reverse();
             interpolate_sequence(&sequence_buf, &mut coefficient_buf)
         })
-        .sum::<i64>();
-
-    // TODO
-    if let Ok(ans) = ans.try_into() {
-        ans
-    } else {
-        // println!("{}", ans);
-        0
-    }
+        .sum::<i64>()
+        .to_string()
 }
 
 #[cfg(test)]
@@ -107,11 +93,11 @@ mod tests {
 
     #[test]
     fn test_part1() {
-        assert_eq!(part1(TEST_INPUT), 114);
+        assert_eq!(&part1(TEST_INPUT), "114");
     }
 
     #[test]
     fn test_part2() {
-        assert_eq!(part2(TEST_INPUT), 2);
+        assert_eq!(&part2(TEST_INPUT), "2");
     }
 }

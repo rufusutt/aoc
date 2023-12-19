@@ -68,7 +68,7 @@ fn find_start_end_values(race: &Race) -> (u64, u64) {
     (start, end)
 }
 
-pub fn part1(input: &str) -> u32 {
+pub fn part1(input: &str) -> String {
     let races = parse_races(input);
 
     races
@@ -77,14 +77,15 @@ pub fn part1(input: &str) -> u32 {
             let (start, end) = find_start_end_values(&race);
             (end - start) + 1
         })
-        .product::<u64>() as u32
+        .product::<u64>()
+        .to_string()
 }
 
-pub fn part2(input: &str) -> u32 {
+pub fn part2(input: &str) -> String {
     let race = parse_single_race(input);
 
     let (start, end) = find_start_end_values(&race);
-    ((end - start) + 1) as u32
+    ((end - start) + 1).to_string()
 }
 
 #[cfg(test)]
@@ -98,11 +99,11 @@ Distance:  9  40  200
 
     #[test]
     fn test_part1() {
-        assert_eq!(part1(TEST_INPUT), 288);
+        assert_eq!(&part1(TEST_INPUT), "288");
     }
 
     #[test]
     fn test_part2() {
-        assert_eq!(part2(TEST_INPUT), 71503);
+        assert_eq!(&part2(TEST_INPUT), "71503");
     }
 }

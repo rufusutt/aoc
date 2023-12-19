@@ -6,8 +6,8 @@ use std::{
 const REPEATS: u32 = 5;
 
 struct Solution {
-    part1: Option<fn(input: &str) -> u32>,
-    part2: Option<fn(input: &str) -> u32>,
+    part1: Option<fn(input: &str) -> String>,
+    part2: Option<fn(input: &str) -> String>,
 }
 
 macro_rules! solutions {
@@ -53,7 +53,7 @@ fn print_usage(name: &str) {
     eprintln!("Usage: {} <DAY> <INPUT>", name);
 }
 
-fn run_part(input: &str, func: Option<fn(input: &str) -> u32>) {
+fn run_part(input: &str, func: Option<fn(input: &str) -> String>) {
     if let Some(func) = func {
         let start = Instant::now();
 

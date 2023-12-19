@@ -123,7 +123,7 @@ fn parse_hands(input: &str, joker: bool) -> Vec<Hand> {
         .collect()
 }
 
-pub fn part1(input: &str) -> u32 {
+pub fn part1(input: &str) -> String {
     let mut hands = parse_hands(input, false);
 
     // Sort hands
@@ -134,9 +134,10 @@ pub fn part1(input: &str) -> u32 {
         .enumerate()
         .map(|(i, hand)| (i + 1) as u32 * hand.bid)
         .sum::<u32>()
+        .to_string()
 }
 
-pub fn part2(input: &str) -> u32 {
+pub fn part2(input: &str) -> String {
     let mut hands = parse_hands(input, true);
 
     // Sort hands
@@ -147,6 +148,7 @@ pub fn part2(input: &str) -> u32 {
         .enumerate()
         .map(|(i, hand)| (i + 1) as u32 * hand.bid)
         .sum::<u32>()
+        .to_string()
 }
 
 #[cfg(test)]
@@ -258,11 +260,11 @@ QQQJA 483
 
     #[test]
     fn test_part1() {
-        assert_eq!(part1(TEST_INPUT), 6440);
+        assert_eq!(&part1(TEST_INPUT), "6440");
     }
 
     #[test]
     fn test_part2() {
-        assert_eq!(part2(TEST_INPUT), 5905);
+        assert_eq!(&part2(TEST_INPUT), "5905");
     }
 }

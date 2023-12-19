@@ -35,7 +35,7 @@ fn lcm(numbers: &[usize]) -> usize {
     res
 }
 
-pub fn part1(input: &str) -> u32 {
+pub fn part1(input: &str) -> String {
     let (commands, nodes) = input.split_once("\n\n").unwrap();
 
     let commands: Vec<_> = commands.trim().chars().collect();
@@ -44,7 +44,7 @@ pub fn part1(input: &str) -> u32 {
     let mut current_node = nodes.get("AAA").expect("Couldn't find AAA");
     for (step, command) in commands.iter().cycle().enumerate() {
         if current_node.name == "ZZZ" {
-            return step as u32;
+            return step.to_string();
         }
 
         let next_node = match command {
@@ -58,7 +58,7 @@ pub fn part1(input: &str) -> u32 {
     panic!("Empty map")
 }
 
-pub fn part2(input: &str) -> u32 {
+pub fn part2(input: &str) -> String {
     let (commands, nodes) = input.split_once("\n\n").unwrap();
 
     let commands: Vec<_> = commands.trim().chars().collect();
@@ -85,13 +85,7 @@ pub fn part2(input: &str) -> u32 {
         })
         .collect();
 
-    let res = lcm(&steps);
-
-    // This is the only day thats solution doesn't fit in 32 bits.
-    // I need to rework the runner to account for this.
-    // For now just print the answer
-    println!("Solution: {}", res);
-    res as u32
+    lcm(&steps).to_string()
 }
 
 #[cfg(test)]
@@ -133,12 +127,12 @@ XXX = (XXX, XXX)
 
     #[test]
     fn test_part1() {
-        assert_eq!(part1(TEST_INPUT_1), 2);
-        assert_eq!(part1(TEST_INPUT_2), 6);
+        assert_eq!(&part1(TEST_INPUT_1), "2");
+        assert_eq!(&part1(TEST_INPUT_2), "6");
     }
 
     #[test]
     fn test_part2() {
-        assert_eq!(part2(TEST_INPUT_3), 6);
+        assert_eq!(&part2(TEST_INPUT_3), "6");
     }
 }

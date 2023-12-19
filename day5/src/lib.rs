@@ -135,7 +135,7 @@ fn map_input_range(input_range: InputRange, map: &Map) -> Vec<InputRange> {
     input_ranges
 }
 
-pub fn part1(input: &str) -> u32 {
+pub fn part1(input: &str) -> String {
     // Parse input
     let (seeds, maps) = input.split_once("\n\n").unwrap();
     let mut inputs = parse_seeds(seeds);
@@ -147,10 +147,10 @@ pub fn part1(input: &str) -> u32 {
         }
     }
 
-    inputs.into_iter().min().unwrap()
+    inputs.into_iter().min().unwrap().to_string()
 }
 
-pub fn part2(input: &str) -> u32 {
+pub fn part2(input: &str) -> String {
     // Parse input
     let (seeds, maps) = input.split_once("\n\n").unwrap();
     let mut input_ranges = parse_seed_ranges(seeds);
@@ -170,6 +170,7 @@ pub fn part2(input: &str) -> u32 {
         .map(|range| range.start)
         .min()
         .unwrap()
+        .to_string()
 }
 
 #[cfg(test)]
@@ -214,12 +215,12 @@ humidity-to-location map:
 
     #[test]
     fn test_part1() {
-        assert_eq!(part1(TEST_INPUT), 35);
+        assert_eq!(&part1(TEST_INPUT), "35");
     }
 
     #[test]
     fn test_part2() {
-        assert_eq!(part2(TEST_INPUT), 46);
+        assert_eq!(&part2(TEST_INPUT), "46");
     }
 
     #[test]

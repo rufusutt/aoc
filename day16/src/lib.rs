@@ -37,7 +37,7 @@ enum Direction {
 }
 
 fn raytrace(map: &Map, x: isize, y: isize, direction: Direction) -> Vec<(isize, isize, Direction)> {
-    return match map.at(x as usize, y as usize) {
+    match map.at(x as usize, y as usize) {
         '.' => match direction {
             Direction::North => vec![(x, y - 1, Direction::North)],
             Direction::East => vec![(x + 1, y, Direction::East)],
@@ -71,7 +71,7 @@ fn raytrace(map: &Map, x: isize, y: isize, direction: Direction) -> Vec<(isize, 
             Direction::West => vec![(x - 1, y, Direction::West)],
         },
         _ => todo!(),
-    };
+    }
 }
 
 fn count_energised(map: &Map, start: (isize, isize, Direction)) -> usize {
@@ -83,7 +83,7 @@ fn count_energised(map: &Map, start: (isize, isize, Direction)) -> usize {
         // Mark as visited
         ray_set.insert((x, y, direction));
 
-        for (next_x, next_y, next_direction) in raytrace(&map, x, y, direction).into_iter() {
+        for (next_x, next_y, next_direction) in raytrace(map, x, y, direction).into_iter() {
             // If out of bounds
             if next_x < 0
                 || next_y < 0
@@ -104,12 +104,12 @@ fn count_energised(map: &Map, start: (isize, isize, Direction)) -> usize {
     energised_set.len()
 }
 
-pub fn part1(input: &str) -> u32 {
+pub fn part1(input: &str) -> String {
     let map = Map::new(input);
-    count_energised(&map, (0, 0, Direction::East)) as u32
+    count_energised(&map, (0, 0, Direction::East)).to_string()
 }
 
-pub fn part2(input: &str) -> u32 {
+pub fn part2(input: &str) -> String {
     let map = Map::new(input);
 
     let mut max_energised = 0;
@@ -130,7 +130,7 @@ pub fn part2(input: &str) -> u32 {
         ));
     }
 
-    max_energised as u32
+    max_energised.to_string()
 }
 
 #[cfg(test)]
@@ -152,11 +152,11 @@ mod tests {
 
     #[test]
     fn test_part1() {
-        assert_eq!(part1(TEST_INPUT), 46);
+        assert_eq!(&part1(TEST_INPUT), "46");
     }
 
     #[test]
     fn test_part2() {
-        assert_eq!(part2(TEST_INPUT), 51);
+        assert_eq!(&part2(TEST_INPUT), "51");
     }
 }

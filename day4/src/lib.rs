@@ -15,7 +15,7 @@ fn count_wins(card: &str) -> usize {
         .count()
 }
 
-pub fn part1(input: &str) -> u32 {
+pub fn part1(input: &str) -> String {
     input
         .trim()
         .lines()
@@ -29,9 +29,10 @@ pub fn part1(input: &str) -> u32 {
             }
         })
         .sum::<u32>()
+        .to_string()
 }
 
-pub fn part2(input: &str) -> u32 {
+pub fn part2(input: &str) -> String {
     let n = input.trim().lines().count();
 
     // DP: Iterate through lines in reverse to build solution
@@ -54,7 +55,7 @@ pub fn part2(input: &str) -> u32 {
         }
     }
 
-    win_table.into_iter().sum::<u32>()
+    win_table.into_iter().sum::<u32>().to_string()
 }
 
 #[cfg(test)]
@@ -72,11 +73,11 @@ Card 6: 31 18 13 56 72 | 74 77 10 23 35 67 36 11
 
     #[test]
     fn test_part1() {
-        assert_eq!(part1(TEST_INPUT), 13);
+        assert_eq!(&part1(TEST_INPUT), "13");
     }
 
     #[test]
     fn test_part2() {
-        assert_eq!(part2(TEST_INPUT), 30);
+        assert_eq!(&part2(TEST_INPUT), "30");
     }
 }

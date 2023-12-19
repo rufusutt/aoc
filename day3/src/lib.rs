@@ -102,7 +102,7 @@ fn check_surrounding(
     labels
 }
 
-pub fn part1(input: &str) -> u32 {
+pub fn part1(input: &str) -> String {
     // Parse input
     let schematic = Schematic::new(input);
 
@@ -124,10 +124,10 @@ pub fn part1(input: &str) -> u32 {
         }
     }
 
-    part_num_sum
+    part_num_sum.to_string()
 }
 
-pub fn part2(input: &str) -> u32 {
+pub fn part2(input: &str) -> String {
     // Parse input
     let schematic = Schematic::new(input);
 
@@ -147,7 +147,7 @@ pub fn part2(input: &str) -> u32 {
         }
     }
 
-    gear_ratio_sum
+    gear_ratio_sum.to_string()
 }
 
 #[cfg(test)]
@@ -169,11 +169,11 @@ mod tests {
 
     #[test]
     fn test_part1() {
-        assert_eq!(part1(TEST_INPUT), 4361);
+        assert_eq!(&part1(TEST_INPUT), "4361");
     }
 
     #[test]
     fn test_part2() {
-        assert_eq!(part2(TEST_INPUT), 467835);
+        assert_eq!(&part2(TEST_INPUT), "467835");
     }
 }

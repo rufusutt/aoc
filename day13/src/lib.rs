@@ -82,7 +82,7 @@ fn find_vertical_reflections(map: &Map) -> Vec<usize> {
     find_reflections(map, false)
 }
 
-pub fn part1(input: &str) -> u32 {
+pub fn part1(input: &str) -> String {
     let mut sum_left_columns = 0;
     let mut sum_above_rows = 0;
 
@@ -96,7 +96,7 @@ pub fn part1(input: &str) -> u32 {
         }
     }
 
-    sum_left_columns + (100 * sum_above_rows)
+    (sum_left_columns + (100 * sum_above_rows)).to_string()
 }
 
 fn find_smudge_reflection(map: &mut Map) -> (usize, usize) {
@@ -134,7 +134,7 @@ fn find_smudge_reflection(map: &mut Map) -> (usize, usize) {
     panic!("No reflection")
 }
 
-pub fn part2(input: &str) -> u32 {
+pub fn part2(input: &str) -> String {
     let mut sum_left_columns = 0;
     let mut sum_above_rows = 0;
 
@@ -145,7 +145,7 @@ pub fn part2(input: &str) -> u32 {
         sum_above_rows += horizontal as u32;
     }
 
-    sum_left_columns + (100 * sum_above_rows)
+    (sum_left_columns + (100 * sum_above_rows)).to_string()
 }
 
 #[cfg(test)]
@@ -172,11 +172,11 @@ mod tests {
 
     #[test]
     fn test_part1() {
-        assert_eq!(part1(TEST_INPUT), 405);
+        assert_eq!(&part1(TEST_INPUT), "405");
     }
 
     #[test]
     fn test_part2() {
-        assert_eq!(part2(TEST_INPUT), 400);
+        assert_eq!(&part2(TEST_INPUT), "400");
     }
 }

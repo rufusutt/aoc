@@ -6,8 +6,13 @@ fn hash(s: &str) -> u8 {
     })
 }
 
-pub fn part1(input: &str) -> u32 {
-    input.trim().split(',').map(|step| hash(step) as u32).sum()
+pub fn part1(input: &str) -> String {
+    input
+        .trim()
+        .split(',')
+        .map(|step| hash(step) as u32)
+        .sum::<u32>()
+        .to_string()
 }
 
 struct Lens<'a> {
@@ -15,7 +20,7 @@ struct Lens<'a> {
     focal_length: &'a str,
 }
 
-pub fn part2(input: &str) -> u32 {
+pub fn part2(input: &str) -> String {
     // Create our boxes
     let mut boxes: [Vec<Lens>; 256] = array_init::array_init(|_| Vec::new());
 
@@ -60,7 +65,7 @@ pub fn part2(input: &str) -> u32 {
         }
     }
 
-    focusing_power
+    focusing_power.to_string()
 }
 
 #[cfg(test)]
@@ -76,11 +81,11 @@ mod tests {
 
     #[test]
     fn test_part1() {
-        assert_eq!(part1(TEST_INPUT), 1320);
+        assert_eq!(&part1(TEST_INPUT), "1320");
     }
 
     #[test]
     fn test_part2() {
-        assert_eq!(part2(TEST_INPUT), 145);
+        assert_eq!(&part2(TEST_INPUT), "145");
     }
 }

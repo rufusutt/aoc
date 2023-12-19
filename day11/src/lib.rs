@@ -88,15 +88,14 @@ fn distance(a: (usize, usize), b: (usize, usize)) -> usize {
     (x2 as isize - x1 as isize).unsigned_abs() + (y2 as isize - y1 as isize).unsigned_abs()
 }
 
-fn sum_of_distances(input: &str, expansion: usize) -> u32 {
+fn sum_of_distances(input: &str, expansion: usize) -> usize {
     let mut image = Image::new(input);
 
     // Adjust for exapansion
     image.expand(expansion - 1);
 
-    let mut sum = 0;
-
     // For each pair of galaxies
+    let mut sum = 0;
     for i in 0..image.galaxies.len() {
         for j in (i + 1)..image.galaxies.len() {
             let g1 = image.galaxies[i];
@@ -105,18 +104,15 @@ fn sum_of_distances(input: &str, expansion: usize) -> u32 {
             sum += distance(g1, g2);
         }
     }
-
-    // TODO: Runner needs to expect more than 32 bits
-    println!("Sum: {}", sum);
-    sum.try_into().expect("Result too large")
+    sum
 }
 
-pub fn part1(input: &str) -> u32 {
-    sum_of_distances(input, 2)
+pub fn part1(input: &str) -> String {
+    sum_of_distances(input, 2).to_string()
 }
 
-pub fn part2(input: &str) -> u32 {
-    sum_of_distances(input, 1000000)
+pub fn part2(input: &str) -> String {
+    sum_of_distances(input, 1000000).to_string()
 }
 
 #[cfg(test)]
@@ -146,7 +142,7 @@ mod tests {
 
     #[test]
     fn test_part1() {
-        assert_eq!(part1(TEST_INPUT), 374);
+        assert_eq!(&part1(TEST_INPUT), "374");
     }
 
     #[test]

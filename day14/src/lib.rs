@@ -111,17 +111,17 @@ fn compute_load(map: &Map) -> u32 {
     total_load
 }
 
-pub fn part1(input: &str) -> u32 {
+pub fn part1(input: &str) -> String {
     let mut map = Map::new(input);
 
     // Slide all rocks up
     slide_north(&mut map);
 
     // North load
-    compute_load(&map)
+    compute_load(&map).to_string()
 }
 
-pub fn part2(input: &str) -> u32 {
+pub fn part2(input: &str) -> String {
     let mut map = Map::new(input);
 
     let mut map_map: HashMap<Map, usize> = HashMap::new();
@@ -143,7 +143,7 @@ pub fn part2(input: &str) -> u32 {
             // Find the map state corresponding to the last iteration in the cycle
             let map = map_map.iter().find(|(_, i)| **i == last).unwrap().0;
 
-            return compute_load(map);
+            return compute_load(map).to_string();
         }
 
         // If the current map state is new, add it to the HashMap
@@ -172,11 +172,11 @@ O.#..O.#.#
 
     #[test]
     fn test_part1() {
-        assert_eq!(part1(TEST_INPUT), 136);
+        assert_eq!(&part1(TEST_INPUT), "136");
     }
 
     #[test]
     fn test_part2() {
-        assert_eq!(part2(TEST_INPUT), 64);
+        assert_eq!(&part2(TEST_INPUT), "64");
     }
 }

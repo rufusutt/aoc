@@ -101,14 +101,14 @@ fn dijkstra(map: &Map, min: usize, max: usize) -> u32 {
     unreachable!()
 }
 
-pub fn part1(input: &str) -> u32 {
+pub fn part1(input: &str) -> String {
     let map = Map::new(input);
-    dijkstra(&map, 0, 3)
+    dijkstra(&map, 0, 3).to_string()
 }
 
-pub fn part2(input: &str) -> u32 {
+pub fn part2(input: &str) -> String {
     let map = Map::new(input);
-    dijkstra(&map, 4, 10)
+    dijkstra(&map, 4, 10).to_string()
 }
 
 #[cfg(test)]
@@ -133,11 +133,11 @@ mod tests {
 
     #[test]
     fn test_part1() {
-        assert_eq!(part1(TEST_INPUT), 102);
+        assert_eq!(&part1(TEST_INPUT), "102");
     }
 
     #[test]
     fn test_part2() {
-        assert_eq!(part2(TEST_INPUT), 94);
+        assert_eq!(&part2(TEST_INPUT), "94");
     }
 }

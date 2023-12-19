@@ -127,7 +127,7 @@ impl Map {
     }
 }
 
-pub fn part1(input: &str) -> u32 {
+pub fn part1(input: &str) -> String {
     let map = Map::new(input);
 
     // Get start position
@@ -153,7 +153,7 @@ pub fn part1(input: &str) -> u32 {
         }
     }
 
-    max_steps
+    max_steps.to_string()
 }
 
 fn find_loop(map: &Map, start: Position) -> Vec<Position> {
@@ -202,7 +202,7 @@ fn shoelace_formula(corners: &[Position]) -> usize {
     (sum.abs() / 2) as usize
 }
 
-pub fn part2(input: &str) -> u32 {
+pub fn part2(input: &str) -> String {
     let map = Map::new(input);
 
     // Get start position
@@ -228,7 +228,7 @@ pub fn part2(input: &str) -> u32 {
     let area = shoelace_formula(&corners);
 
     // Use Pick's theorem to find number of integer points inside polygon
-    (area - (boundary_count / 2) + 1) as u32
+    (area - (boundary_count / 2) + 1).to_string()
 }
 
 #[cfg(test)]
@@ -303,15 +303,15 @@ L7JLJL-JLJLJL--JLJ.L
 
     #[test]
     fn test_part1() {
-        assert_eq!(part1(TEST_INPUT_1), 4);
-        assert_eq!(part1(TEST_INPUT_2), 8);
+        assert_eq!(&part1(TEST_INPUT_1), "4");
+        assert_eq!(&part1(TEST_INPUT_2), "8");
     }
 
     #[test]
     fn test_part2() {
-        assert_eq!(part2(TEST_INPUT_3), 4);
-        assert_eq!(part2(TEST_INPUT_4), 4);
-        assert_eq!(part2(TEST_INPUT_5), 8);
-        assert_eq!(part2(TEST_INPUT_6), 10);
+        assert_eq!(&part2(TEST_INPUT_3), "4");
+        assert_eq!(&part2(TEST_INPUT_4), "4");
+        assert_eq!(&part2(TEST_INPUT_5), "8");
+        assert_eq!(&part2(TEST_INPUT_6), "10");
     }
 }
