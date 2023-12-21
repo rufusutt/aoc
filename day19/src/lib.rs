@@ -152,10 +152,10 @@ fn find_accepted(
 
     for rule in current_workflow.rules.iter() {
         // Index of range to be updated by rule
-        let i = rule.category as usize;
+        let i = rule.category;
 
         // Work out the set of ranges that match this condition
-        let mut matched_ranges = current_ranges.clone();
+        let mut matched_ranges = current_ranges;
         match rule.condition {
             '<' => matched_ranges[i][1] = matched_ranges[i][1].min(rule.rhs - 1),
             '>' => matched_ranges[i][0] = matched_ranges[i][0].max(rule.rhs + 1),
@@ -189,7 +189,7 @@ fn find_accepted(
             current_ranges,
             valid_ranges,
         ),
-        Destination::Rejected => return,
+        Destination::Rejected => (),
         Destination::Accepted => valid_ranges.push(current_ranges),
     }
 }
