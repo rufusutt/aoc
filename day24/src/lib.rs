@@ -1,4 +1,4 @@
-use nalgebra::{Matrix2, Vector2, Vector3};
+use nalgebra::{Matrix2, Matrix6, Vector2, Vector3, Vector6};
 
 #[derive(Debug, PartialEq)]
 struct Line {
@@ -94,7 +94,31 @@ pub fn part1(input: &str) -> String {
 }
 
 pub fn part2(input: &str) -> String {
-    todo!()
+    let lines = parse_lines(input);
+
+    // Given we're looking for a single line in three dimensions, we actually
+    // only need three points.
+    let [p1, v1] = [lines[0].p, lines[0].v];
+    let [p2, v2] = [lines[1].p, lines[1].v];
+    let [p3, v3] = [lines[2].p, lines[2].v];
+
+    // Create linear system of equations
+    let [l, r] = [
+        -p1.cross(&v1) + p2.cross(&v2),
+        -p1.cross(&v1) + p3.cross(&v3),
+    ];
+    let mut m = Matrix6::default();
+    m.view_mut((0, 0), (3, 3))
+        .copy_from_slice((v1.cross_matrix() - v2.cross_matrix()).as_slice());
+    m.view_mut((3, 0), (3, 3))
+        .copy_from_slice((v1.cross_matrix() - v3.cross_matrix()).as_slice());
+    m.view_mut((0, 3), (3, 3))
+        .copy_from_slice((-p1.cross_matrix() + p2.cross_matrix()).as_slice());
+    m.view_mut((3, 3), (3, 3))
+        .copy_from_slice((-p1.cross_matrix() + p3.cross_matrix()).as_slice());
+
+    let p = m.try_inverse().unwrap() * Vector6::new(l.x, l.y, l.z, r.x, r.y, r.z);
+    ((p.x + p.y + p.z).round() as usize).to_string()
 }
 
 #[cfg(test)]
@@ -113,5 +137,10 @@ mod tests {
     fn test_part1() {
         let lines = parse_lines(TEST_INPUT);
         assert_eq!(count_intersections(&lines, 7, 27), 2);
+    }
+
+    #[test]
+    fn test_part2() {
+        assert_eq!(&part2(TEST_INPUT), "47");
     }
 }
